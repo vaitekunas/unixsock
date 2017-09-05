@@ -5,11 +5,18 @@ go:
   - 1.9.x
   - master
 
+env:
+  global:
+    - PATH=$(go env GOPATH | awk 'BEGIN{FS=":"} {print $1}')/bin:$PATH
+
 before_install:
   - go get golang.org/x/tools/cmd/cover
   - go get github.com/mattn/goveralls
-  - go build github.com/mattn/goveralls
+  - go get github.com/modocache/gover
+  - go install github.com/mattn/goveralls
+  - go install github.com/modocache/gover
 
 script:
-  - go test -v -covermode=count -coverprofile=coverage.out
-  - $(go env GOPATH | awk 'BEGIN{FS=":"} {print $1}')/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+  - go list -f '{{if len .TestGoFiles}}"go test -v -coverprofile={{.Dir}}/test.coverprofile {{.ImportPath}}"{{end}}' ./... | xargs -L 1 sh -c
+  - gover
+  - goveralls -coverprofile=gover.coverprofile -service=travis-ci -repotoken $COVERALLS_TOKEN

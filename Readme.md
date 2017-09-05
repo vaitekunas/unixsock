@@ -100,7 +100,7 @@ if err != nil {
 The client can choose whether the server should respond and/or close the connection
 after receiving the message. If the message does not require immediate closing of the
 connection, it will timeout on its own after 5 seconds (default). The timeout
-duration can be adjusted via the `Communicator.Options` method:
+duration can be adjusted via the `UnixSockClient.Options` method:
 
 ```Go
 client, err := client.New(unixSockPath)
