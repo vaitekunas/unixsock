@@ -13,12 +13,18 @@ type UnixSockClient interface {
   // Send sends a command to a UnixSockSrv
   Send(cmd string, args unixsock.Args, respond, close bool) (*unixsock.Response, error)
 
+  // Options sets the options of the underlying communications
+  Options(maxLength int, timeout time.Duration, respond, close bool)
+
   // Quit closes the client
   Quit()
 }
 
 // unixSockClient implements the UnixSockClient interface
 type unixSockClient struct {
+  maxLength int
+  timeout time.Duration
+  respond, close bool
   unixSockPath string
   conn net.Conn
   conntime time.Time
@@ -28,9 +34,21 @@ type unixSockClient struct {
 func New(UnixSockPath string) (UnixSockClient, error) {
 
   return &unixSockClient{
+    maxLength: 1 << 20,
+    timeout: 5*time.Second,
+    respond: true,
+    close: true,
     unixSockPath: UnixSockPath,
   }, nil
 
+}
+
+// Options sets communicator options
+func (u *unixSockClient) Options(maxLength int, timeout time.Duration, respond, close bool)     {
+  u.respond = respond
+  u.close = close
+  u.maxLength = maxLength
+  u.timeout = timeout
 }
 
 // Send sends a single message to a UnixSockSrv
@@ -43,6 +61,9 @@ func (u *unixSockClient) Send(cmd string, args unixsock.Args, respond, close boo
 
   // Construct new message
   msg := unixsock.NewSender(u.conn, cmd, args, respond, close)
+
+  // Set options
+  msg.Options(u.maxLength, u.timeout, respond, close)
 
   // Send
 	if err := msg.Send(); err != nil {
