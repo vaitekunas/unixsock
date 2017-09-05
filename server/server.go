@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 	"net"
-  "sync"
+	"sync"
 
 	"github.com/vaitekunas/unixsock"
 	context "golang.org/x/net/context"
@@ -33,19 +33,19 @@ func New(UnixSockPath string, handler func(cmd string, args unixsock.Args) *unix
 		cancelCTX:  cancel,
 	}
 
-  // Unix handler
-  unixHandler := newUnixRequestHandler(handler)
+	// Unix handler
+	unixHandler := newUnixRequestHandler(handler)
 
 	// Serve socket requests
 	connChan := make(chan net.Conn, 1)
 
-  // Wait group for goroutine startup
-  wg := &sync.WaitGroup{}
-  wg.Add(2)
+	// Wait group for goroutine startup
+	wg := &sync.WaitGroup{}
+	wg.Add(2)
 
 	// Listen for incoming unix connections
 	go func() {
-    wg.Done()
+		wg.Done()
 	Loop:
 		for {
 			fd, errUnix := listenUnix.Accept()
@@ -62,7 +62,7 @@ func New(UnixSockPath string, handler func(cmd string, args unixsock.Args) *unix
 
 	// Process unix connections
 	go func() {
-    wg.Done()
+		wg.Done()
 	Loop:
 		for {
 			select {
@@ -74,8 +74,8 @@ func New(UnixSockPath string, handler func(cmd string, args unixsock.Args) *unix
 		}
 	}()
 
-  // Wait for goroutines
-  wg.Wait()
+	// Wait for goroutines
+	wg.Wait()
 
 	// New server
 	return srv, nil

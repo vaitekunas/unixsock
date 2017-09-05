@@ -15,7 +15,6 @@ const (
 	STATUS_FAIL = "failure"
 )
 
-
 // Args is a shorthand for a map of strings to interfaces
 type Args map[string]interface{}
 

@@ -1,4 +1,4 @@
-# unixsock [![godoc](https://img.shields.io/badge/go-documentation-blue.svg)](https://godoc.org/github.com/vaitekunas/unixsock) [![Build Status](https://travis-ci.org/vaitekunas/unixsock.svg?branch=master)](https://travis-ci.org/vaitekunas/unixsock) [![Coverage Status](https://coveralls.io/repos/github/vaitekunas/unixsock/badge.svg?branch=master)](https://coveralls.io/github/vaitekunas/unixsock?branch=master)
+# unixsock [![godoc](https://img.shields.io/badge/go-documentation-blue.svg)](https://godoc.org/github.com/vaitekunas/unixsock) [![Go Report Card](https://goreportcard.com/badge/github.com/vaitekunas/unixsock)](https://goreportcard.com/report/github.com/vaitekunas/unixsock) [![Build Status](https://travis-ci.org/vaitekunas/unixsock.svg?branch=master)](https://travis-ci.org/vaitekunas/unixsock) [![Coverage Status](https://coveralls.io/repos/github/vaitekunas/unixsock/badge.svg?branch=master)](https://coveralls.io/github/vaitekunas/unixsock?branch=master)
 
 UNIX domain sockets are a method by which processes on the same host can
 communicate with each other. The communication is bidirectional, so that both the
@@ -15,7 +15,7 @@ Some of the advantages of using UNIX domain sockets instead of alternatives
 * Accessible only on the host by a user having permission to read the socket file.
 * No need to implement additional authentication methods - authentication can be
 handled by the ssh agent
-* No need to build a UI (although a UI could be more comfortable in some cases).
+* No need to build a UI (although it could be more comfortable in some cases).
 Building a sysadmin UI usually requires additional security measures, user isolation
 and so on. In case of UNIX sockets all this is handled by the host.
 
@@ -25,8 +25,8 @@ application.
 
 ## Server
 
-A `UnixSockSrv's` core is the request handler. At instantiation time the server
-accepts only a single monolithic handler, so that it should be able to handle all
+`UnixSockSrv's` core is the request handler. At instantiation time the server
+accepts only a single monolithic handler, which should be able to handle all
 the relevant commands, as well as unknown requests.
 
 The simplest way of implementing this is by puttint the whole API into a switch
