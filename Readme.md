@@ -1,4 +1,4 @@
-# unixsock
+# unixsock [![godoc](https://img.shields.io/badge/go-documentation-blue.svg)](https://godoc.org/github.com/vaitekunas/unixsock) [![Build Status](https://travis-ci.org/vaitekunas/unixsock.svg?branch=master)](https://travis-ci.org/vaitekunas/unixsock) [![Coverage Status](https://coveralls.io/repos/github/vaitekunas/unixsock/badge.svg?branch=master)](https://coveralls.io/github/vaitekunas/unixsock?branch=master)
 
 UNIX domain sockets are a method by which processes on the same host can
 communicate with each other. The communication is bidirectional, so that both the
